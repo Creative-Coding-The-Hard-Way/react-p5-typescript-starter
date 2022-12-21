@@ -1,0 +1,1 @@
+{"mappings":"AAAAA,QAAQC,IAAI","sources":["src/app.ts"],"sourcesContent":["console.log(\"hello world\");\n\nexport {};\n"],"names":["console","log"],"version":3,"file":"index.fae641a6.js.map"}
