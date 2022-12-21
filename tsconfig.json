@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "isolatedModules": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "allowJs": true
+}
