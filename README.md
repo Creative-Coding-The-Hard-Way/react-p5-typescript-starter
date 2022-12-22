@@ -19,6 +19,17 @@ browser.
 - `npm run check`
   - run the typescript compiler to check types in the project
 
+## Directory Structure Overview
+
+- `./src` - The main TS application. This is the index, the app, any css
+  modules, etc. This is where you should put your code when building something
+  new.
+- `./lib` - Is the P5+React wrapper logic. This defines the `Sketch` component
+  and the `P5Sketch` abstract class which can be overridden to interact with
+  the P5 sketch.
+- `./site` - The root html and css for the site. This also includes site
+  metadata like the favicon and manifest.
+
 ## Tools
 
 - p5.js
