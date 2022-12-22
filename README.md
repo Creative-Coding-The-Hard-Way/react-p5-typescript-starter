@@ -1,6 +1,7 @@
-# Typescript Browser Starter
+# React+p5.js Typescript Browser Starter
 
-An opinionated starter project for using typescript in the browser.
+An opinionated starter project for using typescript, react, and p5.js in the
+browser.
 
 ## TODO
 
@@ -20,6 +21,8 @@ An opinionated starter project for using typescript in the browser.
 
 ## Tools
 
+- p5.js
+- react
 - Parcel
 - Typescript
 - eslint

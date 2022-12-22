@@ -1,3 +1,6 @@
 body {
   background-color: hotpink;
 }
+canvas {
+  display: block;
+}
