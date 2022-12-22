@@ -3,6 +3,9 @@
 An opinionated starter project for using typescript, react, and p5.js in the
 browser.
 
+To get started use this repository as a template, run `npm run develop`, and 
+make your changes in [./src/sketch.ts](./src/sketch.ts)
+
 ## TODO
 
 1. update `package.json` and replace the `publicURL` with the name of
