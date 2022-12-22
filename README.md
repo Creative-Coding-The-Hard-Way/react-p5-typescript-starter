@@ -3,7 +3,7 @@
 An opinionated starter project for using typescript, react, and p5.js in the
 browser.
 
-To get started use this repository as a template, run `npm run develop`, and 
+To get started use this repository as a template, run `npm run develop`, and
 make your changes in [./src/sketch.ts](./src/sketch.ts)
 
 ## TODO
@@ -37,6 +37,7 @@ make your changes in [./src/sketch.ts](./src/sketch.ts)
 
 - p5.js
 - react
+- valtio
 - Parcel
 - Typescript
 - eslint
