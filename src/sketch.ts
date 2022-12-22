@@ -1,6 +1,13 @@
 import P5Sketch from "../lib/P5Sketch";
 import P5 from "p5";
 
+import { proxy } from "valtio";
+
+export type BackgroundColor = "gray" | "blue" | "green";
+export const store = proxy<{ pointCount: number; background: BackgroundColor }>(
+  { pointCount: 0, background: "gray" }
+);
+
 export default class MySketch extends P5Sketch {
   points: { x: number; y: number }[] = [];
 
@@ -9,10 +16,11 @@ export default class MySketch extends P5Sketch {
   }
 
   draw(p: P5): void {
-    p.background(200);
+    p.background(store.background);
 
     if (p.mouseIsPressed) {
       this.points.push({ x: p.mouseX, y: p.mouseY });
+      store.pointCount = this.points.length;
     }
 
     for (let i = 1; i < this.points.length; i++) {
@@ -24,5 +32,6 @@ export default class MySketch extends P5Sketch {
 
   mousePressed = () => {
     this.points = [];
+    store.pointCount = this.points.length;
   };
 }
