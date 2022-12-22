@@ -11,6 +11,16 @@ export const store = proxy<{ pointCount: number; background: BackgroundColor }>(
 export default class MySketch extends P5Sketch {
   points: { x: number; y: number }[] = [];
 
+  isOnCanvas(p: P5, x: number, y: number): boolean {
+    if (x < 0 || y < 0) {
+      return false;
+    }
+    if (x > p.width || y > p.height) {
+      return false;
+    }
+    return true;
+  }
+
   setup(p: P5): void {
     p.strokeWeight(10);
   }
@@ -18,7 +28,7 @@ export default class MySketch extends P5Sketch {
   draw(p: P5): void {
     p.background(store.background);
 
-    if (p.mouseIsPressed) {
+    if (p.mouseIsPressed && this.isOnCanvas(p, p.mouseX, p.mouseY)) {
       this.points.push({ x: p.mouseX, y: p.mouseY });
       store.pointCount = this.points.length;
     }
@@ -30,8 +40,10 @@ export default class MySketch extends P5Sketch {
     }
   }
 
-  mousePressed = () => {
-    this.points = [];
-    store.pointCount = this.points.length;
+  mousePressed = (p: P5) => {
+    if (this.isOnCanvas(p, p.mouseX, p.mouseY)) {
+      this.points = [];
+      store.pointCount = this.points.length;
+    }
   };
 }

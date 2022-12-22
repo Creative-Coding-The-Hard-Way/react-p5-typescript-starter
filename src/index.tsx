@@ -10,8 +10,13 @@ import { useSnapshot } from "valtio";
 function App() {
   const snap = useSnapshot(store);
   return (
-    <div>
-      <div className={appCssClasses.infoPanel}>
+    <div className={appCssClasses.mainAppDisplay}>
+      <Sketch
+        impl={new MySketch()}
+        className={appCssClasses.sketchArea}
+        renderer="p2d"
+      ></Sketch>
+      <div className={appCssClasses.controlPanelArea}>
         <h2>Point Count: {snap.pointCount}</h2>
         <select
           value={snap.background}
@@ -24,11 +29,6 @@ function App() {
           <option value="gray">Gray</option>
         </select>
       </div>
-      <Sketch
-        impl={new MySketch()}
-        className={appCssClasses.mySketch}
-        renderer="p2d"
-      ></Sketch>
     </div>
   );
 }
