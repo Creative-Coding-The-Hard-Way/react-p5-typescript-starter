@@ -47,7 +47,9 @@ class Sketch extends React.Component<SketchProps, SketchState> {
     let root = this.root!;
 
     this.p5_sketch = new P5((p5: P5) => {
-      this.observer = new ResizeObserver(() => (this.needsResize = true));
+      this.observer = new ResizeObserver(() => {
+        this.needsResize = true;
+      });
       this.observer.observe(root);
 
       p5.preload = impl.preload.bind(impl, p5);
@@ -59,6 +61,7 @@ class Sketch extends React.Component<SketchProps, SketchState> {
         if (this.needsResize) {
           this.needsResize = false;
           let [w, h] = [root.clientWidth, root.clientHeight];
+          console.log("resize", w, h);
           p5.resizeCanvas(w, h);
           if (impl.canvasResized) {
             impl.canvasResized(p5, w, h);
