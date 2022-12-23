@@ -30,6 +30,7 @@ class Sketch extends React.Component<SketchProps, SketchState> {
   p5_sketch: P5 | null = null;
   root: HTMLDivElement | null = null;
   observer: ResizeObserver | null = null;
+  needsResize: boolean = true;
 
   constructor(props: SketchProps) {
     super(props);
@@ -44,27 +45,27 @@ class Sketch extends React.Component<SketchProps, SketchState> {
 
     let impl = this.props.impl;
     let root = this.root!;
-    let setObserver = this.setObserver.bind(this);
 
     this.p5_sketch = new P5((p5: P5) => {
-      let resizeCanvas = () => {
-        let [w, h] = [root.clientWidth, root.clientHeight];
-        p5.resizeCanvas(w, h);
-        if (impl.canvasResized) {
-          impl.canvasResized(p5, w, h);
-        }
-      };
-      let observer = new ResizeObserver(resizeCanvas);
-      setObserver(observer);
-      observer.observe(root);
+      this.observer = new ResizeObserver(() => (this.needsResize = true));
+      this.observer.observe(root);
 
       p5.preload = impl.preload.bind(impl, p5);
       p5.setup = () => {
         p5.createCanvas(200, 200, this.props.renderer);
-        resizeCanvas();
         impl.setup(p5);
       };
-      p5.draw = impl.draw.bind(impl, p5);
+      p5.draw = () => {
+        if (this.needsResize) {
+          this.needsResize = false;
+          let [w, h] = [root.clientWidth, root.clientHeight];
+          p5.resizeCanvas(w, h);
+          if (impl.canvasResized) {
+            impl.canvasResized(p5, w, h);
+          }
+        }
+        impl.draw(p5);
+      };
 
       if (impl.deviceMoved) {
         p5.deviceMoved = impl.deviceMoved.bind(impl, p5);
@@ -120,13 +121,13 @@ class Sketch extends React.Component<SketchProps, SketchState> {
 
   componentWillUnmount() {
     console.log("Unmount p5 sketch");
-    if (this.p5_sketch != null) {
-      this.p5_sketch.remove();
-      this.p5_sketch = null;
-    }
     if (this.observer != null) {
       this.observer.disconnect();
       this.observer = null;
+    }
+    if (this.p5_sketch != null) {
+      this.p5_sketch.remove();
+      this.p5_sketch = null;
     }
   }
 
