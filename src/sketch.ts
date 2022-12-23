@@ -7,7 +7,8 @@ export const store = proxy<{
   yFrequency: number;
   xFrequency: number;
   needsClear: boolean;
-}>({ yFrequency: 1.7, xFrequency: 2.1, needsClear: false });
+  fps: number;
+}>({ yFrequency: 1.7, xFrequency: 2.1, needsClear: false, fps: 60 });
 
 export default class MySketch extends P5Sketch {
   radius: number = 100;
@@ -35,10 +36,14 @@ export default class MySketch extends P5Sketch {
   }
 
   setup(p: P5): void {
-    p.stroke(255, 255, 255, 25);
+    p.stroke(255, 255, 255, 15);
   }
 
   draw(p: P5): void {
+    if (p.frameCount % 30 == 0) {
+      store.fps = p.frameRate();
+    }
+
     if (store.needsClear) {
       p.background(0, 0, 0, 255);
       this.resetPoints(p);
